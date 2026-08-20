@@ -18,7 +18,7 @@ const RepositorySchema = new Schema({
 
     visibility: {
         type: Boolean,
-        default: false,
+        default: true,
     },
 
     owner: {
