@@ -88,11 +88,9 @@ const fetchRepositoriesForCurrentUser = async (req, res) => {
     const id = req.params.userId;
     try{
         const repositories = await Repository.find({owner: id});
-        if(!repositories || repositories.length == 0){
-            return res.status(404).json({error:"User repositories not found"});
-        }
 
-        res.json({message:"Repositories Found", repositories});
+
+        return res.status(200).json({message:"Repositories Found", repositories: repositories});
     }catch(err){
         console.error("Error during fetching user repositories: ", err.message);
         res.status(500).json("Server error");

@@ -9,6 +9,8 @@ import Signup from "./components/auth/Signup";
 
 import { useAuth } from './authContext';
 import CreateRepo from './components/repo/CreateRepo';
+import RepoDetail from './components/repo/RepoDetail';
+import CreateIssue from './components/issue/CreateIssue';
 
 const ProjectRoutes = () => {
     const {currentUser, setCurrentUser} = useAuth();
@@ -50,6 +52,14 @@ const ProjectRoutes = () => {
         {
             path: "/create",
             element: <CreateRepo/>
+        },
+        {
+            path: "/repo/:id",
+            element: <RepoDetail />
+        },
+        {
+            path: "/issue/create/:id",
+            element: <CreateIssue />
         }
     ]);
 
