@@ -20,7 +20,16 @@ const mainRouter = require("./routes/main.router");
 
 yargs(hideBin(process.argv))
     .command("start", "Starts a new server", {}, startServer)
-    .command("init", "Initialse a repository", {}, initRepo)
+    .command("init <repoId>", "Initialse a repository", (yargs) => {
+        yargs.positional("repoId", {
+            describe: "MongoDB Repository ID",
+            type: "String"
+        })
+    }, 
+        (argv) => {
+            initRepo(argv.repoId);
+        }
+    )
     .command("add <file>", "Add a file to the repository", (yargs) => {
         yargs.positional("file",{
             describe: "File to add to the staging area",

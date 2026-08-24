@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Issue = require("../models/issueModel");
+const Repository = require("../models/repoModel");
 
 const createIssue = async (req, res) => {
     const {title, description} = req.body;
@@ -15,8 +16,38 @@ const createIssue = async (req, res) => {
             repository : id,
         })
 
+        console.log("Created issue: ", issue._id)
+
         await issue.save();
-        res.status(201).json(issue);
+
+        const repository = await Repository.findById(id);
+
+        if(!repository){
+            return res.status(404).json({
+                error: "Repository not found"
+            })
+        }
+
+        const updatedRepo = await Repository.findByIdAndUpdate(id,
+             {
+                $push: {
+                    issues: issue._id,
+                },
+            },
+            {
+                new: true
+            }
+        )
+
+        console.log("Repo updated sucessfully: ", updatedRepo.issues)
+
+        return res
+        .status(201)
+        .json({
+            message: "Issue created successfully",
+            issue,
+            repository: updatedRepo,
+        })
     }catch(err){
         console.error("Error during creating repository: ", err.message);
         res.status(500).json("Server error");

@@ -1,9 +1,7 @@
 const fs = require("fs").promises
 const path = require("path");
 
-
-
-async function initRepo() {
+async function initRepo(repoId) {
     const repoPath = path.resolve(process.cwd(), ".myGit");
     const commitsPath = path.join(repoPath, "commits");
 
@@ -12,9 +10,16 @@ async function initRepo() {
         await fs.mkdir(commitsPath, {recursive: true});
         await fs.writeFile(
             path.join(repoPath, "config.json"),
-            JSON.stringify({bucket: process.env.BUCKET_S3})
+            JSON.stringify({
+                bucket: process.env.BUCKET_S3,
+                repoId: repoId,
+            },
+                null,
+                2   
+            )
         );
         console.log("Repository Initialised successfully");
+        console.log("Repository Id: ", repoId)
     }catch(err){
         console.error("Error in initialising repository :", err);
     }
