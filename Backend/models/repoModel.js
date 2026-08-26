@@ -13,7 +13,18 @@ const RepositorySchema = new Schema({
     },
 
     content: [{
-        type: String,
+        fileName: {
+            type: String,
+            required: true,
+        },
+        commitId: {
+            type: String,
+            required: true,
+        },
+        s3Key:{
+            type: String,
+            required: true,
+        }
     }],
 
     visibility: {

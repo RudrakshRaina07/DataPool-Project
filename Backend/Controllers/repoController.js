@@ -109,7 +109,11 @@ const updateRepositoryById = async (req, res) => {
         }
 
         if(content){
-            repository.content.push(content);
+            repository.content.push({
+                fileName: content.fileName,
+                commitId: content.commitId,
+                s3Key: content.s3Key
+            });
         }
 
         if(description){

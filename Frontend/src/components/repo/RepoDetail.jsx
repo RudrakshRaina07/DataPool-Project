@@ -64,7 +64,10 @@ const RepoDetail = () => {
             <Navbar />
             <div className='bg-[#471396] min-h-screen w-[95%] rounded-xl m-4 p-5 overflow'>
                 <div className='border p-6 rounded-xl'>
-                    <h1 className='font-bold text-2xl mb-3 capitalize'>Repository Name : {repo.name}</h1>
+                    <h1 onClick={() => {
+                        navigate(`/repo/content/${repo._id}`)
+                    }} 
+                    className='font-bold text-2xl mb-3 capitalize cursor-pointer'>Repository Name : <span className='hover:text-indigo-400'>{repo.name}</span></h1>
                     <p className='font-medium text-lg text-gray-500 mb-6'>Description : {repo.description}</p>
                     <span
                         className={`rounded-full font-medium py-3 px-6 ${repo.visibility ? "bg-green-700" : "bg-gray-700"}`}
