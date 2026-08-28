@@ -20,7 +20,13 @@ async function pushRepo() {
 
         const commitPath = path.join(commitsPath, cleanCommitId);
         const files = await fs.readdir(commitPath);
+
+        const commitData = await fs.readFile(
+            path.join(commitPath, "commit.json"),
+            "utf-8"
+        )
             
+        const commitInfo = JSON.parse(commitData)
 
         for(const file of files){
             if(file === "commit.json") continue;
@@ -48,6 +54,13 @@ async function pushRepo() {
                 }
             )
         }
+
+        await axios.post(`http://localhost:3000/commit/create`, {
+            commitId: cleanCommitId,
+            message: commitInfo.message,
+            date: commitInfo.date,
+            repositoryId: config.repoId
+        })
 
         console.log("All commits pushed to S3"); 
     }catch(err){
