@@ -12,7 +12,6 @@ const RepoDetail = () => {
     const [repo, setRepo] = useState("")
     const [issues, setIssues] = useState([])
 
-
     useEffect(() => {
         const fetchRepoAndIssue = async() => {
             try {
@@ -87,6 +86,14 @@ const RepoDetail = () => {
                             }}
                             className='px-6 py-3 rounded-full bg-red-600 font-medium cursor-pointer active:scale-95'>
                             Delete Repository
+                        </button>
+                        <button 
+                            onClick={() => {
+                                navigate(`/commit/repository/${id}`)
+                            }}
+                            className="px-6 py-3 bg-green-700 rounded-full font-medium cursor-pointer active:scale-95 hover:bg-green-800"
+                        >
+                            See Commit History
                         </button>
                     </div>
 

@@ -12,6 +12,7 @@ import CreateRepo from './components/repo/CreateRepo';
 import RepoDetail from './components/repo/RepoDetail';
 import CreateIssue from './components/issue/CreateIssue';
 import RepoContent from './components/repo/RepoContent';
+import CommitHistory from './components/commit/commitHistory';
 
 const ProjectRoutes = () => {
     const {currentUser, setCurrentUser} = useAuth();
@@ -65,6 +66,10 @@ const ProjectRoutes = () => {
         {
             path: "/repo/content/:id",
             element: <RepoContent/>
+        },
+        {
+            path:  "/commit/repository/:id",
+            element: <CommitHistory/>
         }
     ]);
 
