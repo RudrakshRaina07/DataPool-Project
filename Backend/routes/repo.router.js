@@ -1,5 +1,6 @@
 const express = require("express");
 const repoController = require("../Controllers/repoController");
+const authMiddleware = require("../middleware/authMiddleware");
 
 const repoRouter = express.Router();
 
@@ -9,8 +10,8 @@ repoRouter.get("/repo/all", repoController.getAllRepositories);
 repoRouter.get("/repo/name/:name", repoController.fetchRepositoryByName);
 repoRouter.get("/repo/user/:userId", repoController.fetchRepositoriesForCurrentUser);
 repoRouter.put("/repo/update/:id", repoController.updateRepositoryById);
-repoRouter.patch("/repo/toggle/:id", repoController.toggleVisibilityById);
-repoRouter.delete("/repo/delete/:id", repoController.deleteRepositoryById);
+repoRouter.patch("/repo/toggle/:id", authMiddleware, repoController.toggleVisibilityById);
+repoRouter.delete("/repo/delete/:id", authMiddleware,repoController.deleteRepositoryById);
 
 repoRouter.get("/repo/:id", repoController.fetchRepositoryById);
 

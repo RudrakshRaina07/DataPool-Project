@@ -142,6 +142,12 @@ const toggleVisibilityById = async (req, res) => {
             return res.status(404).json({error:"Repository not found"});
         }
 
+        if(repository.owner.toString() !== req.user.id){
+            return res.status(403).json({
+                error: "You are not the owner of this repository"
+            })
+        }
+
         repository.visibility = !repository.visibility;
 
         const updatedRepo = await repository.save();
@@ -164,6 +170,13 @@ const deleteRepositoryById = async (req, res) => {
         if(!repository){
             return res.status(404).json({error:"Repository not found"});
         }
+
+        if(repository.owner.toString() !== req.user.id){
+            return res.status(403).json({
+                error: "You are not the owner of this repository"
+            })
+        }
+        
 
         res.json({message: "Repository deleted successfully"});
     }catch(err){

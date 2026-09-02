@@ -12,6 +12,11 @@ const RepoDetail = () => {
     const [repo, setRepo] = useState("")
     const [issues, setIssues] = useState([])
 
+    const token = localStorage.getItem("token")
+    const currentUserId = localStorage.getItem("userId")
+
+    const isOwner = repo.owner?._id?.toString() === currentUserId
+
     useEffect(() => {
         const fetchRepoAndIssue = async() => {
             try {
@@ -40,7 +45,11 @@ const RepoDetail = () => {
 
     const handleToggleVisibility = async () => {
         try {
-            await axios.patch(`http://localhost:3000/repo/toggle/${id}`)
+            await axios.patch(`http://localhost:3000/repo/toggle/${id}`, {}, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            })
             setRepo({...repo, visibility: !repo.visibility})
         } catch (error) {
             console.error("Error toggling visibility :", error)
@@ -50,7 +59,11 @@ const RepoDetail = () => {
     const handleDeleteRepository = async () => {
         if(window.confirm("Are you sure you want to delete the repository? ")){
             try {
-                await axios.delete(`http://localhost:3000/repo/delete/${id}`)
+                await axios.delete(`http://localhost:3000/repo/delete/${id}`, {}, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                })
                 navigate('/')
             } catch (error) {
                 console.error("Error while deleting repository :", error)
@@ -71,32 +84,34 @@ const RepoDetail = () => {
                     <span
                         className={`rounded-full font-medium py-3 px-6 ${repo.visibility ? "bg-green-700" : "bg-gray-700"}`}
                     >{repo.visibility ? "Public" : "Private"}</span>
-                    <div className='mt-7 flex gap-10'>
-                        <button
-                            onClick={() => {
-                                handleToggleVisibility()
-                            }}
-                            className={`px-6 py-3 rounded-full bg-indigo-500  font-medium cursor-pointer active:scale-95`}    
-                        >
-                            Toggle Visibility
-                        </button>
-                        <button 
-                            onClick={() => {
-                                handleDeleteRepository()
-                            }}
-                            className='px-6 py-3 rounded-full bg-red-600 font-medium cursor-pointer active:scale-95'>
-                            Delete Repository
-                        </button>
-                        <button 
-                            onClick={() => {
-                                navigate(`/commit/repository/${id}`)
-                            }}
-                            className="px-6 py-3 bg-green-700 rounded-full font-medium cursor-pointer active:scale-95 hover:bg-green-800"
-                        >
-                            See Commit History
-                        </button>
-                    </div>
 
+                    {isOwner && (
+                        <div className='mt-7 flex gap-10'>
+                            <button
+                                onClick={() => {
+                                    handleToggleVisibility()
+                                }}
+                                className={`px-6 py-3 rounded-full bg-indigo-500  font-medium cursor-pointer active:scale-95`}    
+                            >
+                                Toggle Visibility
+                            </button>
+                            <button 
+                                onClick={() => {
+                                    handleDeleteRepository()
+                                }}
+                                className='px-6 py-3 rounded-full bg-red-600 font-medium cursor-pointer active:scale-95'>
+                                Delete Repository
+                            </button>
+                            <button 
+                                onClick={() => {
+                                    navigate(`/commit/repository/${id}`)
+                                }}
+                                className="px-6 py-3 bg-green-700 rounded-full font-medium cursor-pointer active:scale-95 hover:bg-green-800"
+                            >
+                                See Commit History
+                            </button>
+                        </div>
+                    )}
                 </div>
                 <div className='border p-6 rounded-xl mt-5'>
                     <div>
