@@ -4,7 +4,8 @@ const User = require("../models/userModel");
 const Issue = require("../models/issueModel");
 
 const createRepository = async (req, res) => {
-    const {name, description, content, visibility, owner, issues} = req.body;
+    const {name, description, content, visibility, issues} = req.body;
+    const owner = req.user.id
     try{
         if(!name){
             return res.status(400).json({error: "Repository name is required!"});

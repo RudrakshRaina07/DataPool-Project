@@ -31,7 +31,7 @@ const Signup = () => {
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("userId", res.data.userId);
       console.log("AFTER SET:", localStorage.getItem("token"), localStorage.getItem("userId"));
-      setCurrentUser(res.data.userId);
+      setCurrentUser(res.data.token);
       setLoading(false);
 
       window.location.href = "/";

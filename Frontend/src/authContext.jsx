@@ -10,18 +10,33 @@ export const useAuth = () =>{
 
 export const AuthProvider = ({children}) => {
     const [currentUser, setCurrentUser] = useState(null);
+    const [loading, setLoading] = useState(true)
 
     useEffect(()=>{
-        const userId = localStorage.getItem('userId');
+        const token = localStorage.getItem('token');
 
-        if(userId){
-            setCurrentUser(userId);
+        if(token){
+            setCurrentUser(token);
         }
+
+        setLoading(false)
     }, []);
 
-    const value = {
-        currentUser, setCurrentUser
+    const logout = () => {
+        localStorage.removeItem("token")
+        localStorage.removeItem("userId")
+        setCurrentUser(null)
     }
 
-    return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
+    return <AuthContext.Provider 
+                value={{
+                    currentUser,
+                    setCurrentUser,
+                    loading,
+                    logout,
+                    isAuthenticated: !!currentUser,
+                }}
+            >
+                {children}
+            </AuthContext.Provider>
 }

@@ -19,15 +19,20 @@ const CreateRepo = () => {
         try {
             setLoading(true)
 
-            const owner = localStorage.getItem("userId")
+            const owner = localStorage.getItem("token")
 
             const res = await axios.post("http://localhost:3000/repo/create", {
                 name, 
                 description, 
                 visibility, 
-                owner,
                 issues: [],
-            })
+            },
+            {
+               headers:{
+                Authorization: `Bearer ${token}`
+               } 
+            }
+            )
 
             alert("Repository created successfully")
             console.log(res.data)

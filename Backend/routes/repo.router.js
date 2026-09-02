@@ -5,7 +5,7 @@ const authMiddleware = require("../middleware/authMiddleware");
 const repoRouter = express.Router();
 
 
-repoRouter.post("/repo/create", repoController.createRepository);
+repoRouter.post("/repo/create", authMiddleware, repoController.createRepository);
 repoRouter.get("/repo/all", repoController.getAllRepositories);
 repoRouter.get("/repo/name/:name", repoController.fetchRepositoryByName);
 repoRouter.get("/repo/user/:userId", repoController.fetchRepositoriesForCurrentUser);

@@ -65,6 +65,9 @@ const Dashboard = () => {
                                 className='text-lg border m-4 rounded-2xl p-4  w-full transition-all duration-250 hover:-translate-y-1.5 hover:shadow-xl hover:border-[#B13BFF] hover:border-2'
                                 key={repo._id} > 
                                 <h4
+                                    onClick={() => {
+                                        navigate(`/repo/${repo._id}`)
+                                    }}
                                     className='font-bold mb-2 hover:underline'>{repo.name}</h4>
                                 <p className='font-medium'>Description : {repo.description}</p>
                             </div>
