@@ -32,75 +32,46 @@ const Profile = () => {
   }, []);
 
   return (
-    <>
-      <Navbar />
-        <UnderlineNav aria-label="Repository">
-          <UnderlineNav.Item
-            aria-current="page"
-            icon={BookIcon}
-            sx={{
-              backgroundColor: "transparent",
-              color: "white",
-              "&:hover": {
-                textDecoration: "underline",
-                color: "white",
-              },
-            }}
-          >
-            Overview
-          </UnderlineNav.Item>
+        <div className='bg-[#090040] min-h-screen text-white flex flex-col items-center overflow'>
+            <Navbar />
+            <div className='bg-[#471396] min-h-screen w-[95%] rounded-xl m-4 p-6 overflow'>
+                <div className="flex justify-between items-center mb-10">
+                  <div className=""> 
+                    <div className=""></div>
 
-          <UnderlineNav.Item
-            onClick={() => navigate("/repo")}
-            icon={RepoIcon}
-            sx={{
-              backgroundColor: "transparent",
-              color: "whitesmoke",
-              "&:hover": {
-                textDecoration: "underline",
-                color: "white",
-              },
-            }}
-          >
-            Starred Repositories
-          </UnderlineNav.Item>
-        </UnderlineNav>
+                    <div className="capitalize py-4 flex gap-10 items-center">
+                      <h3 className="text-2xl font-bold ">{userDetails.username}</h3>
+                      <button className=" cursor-pointer bg-green-600 active:scale-95 hover:bg-green-800 text-black px-6 py-3 rounded-full font-semibold">Follow</button>
+                    </div>
 
-      <button
-        onClick={() => {
-          localStorage.removeItem("token");
-          localStorage.removeItem("userId");
-          setCurrentUser(null);
+                    <div className="flex gap-10">
+                      <p>10 Follower</p>
+                      <p>3 Following</p>
+                    </div>
+                  </div>
+                  <div className="h-10 px-10">
+                    <button className="px-8 py-4 bg-indigo-500 rounded-full font-semibold text-lg active:scale-95 hover:bg-indigo-600 cursor-pointer">Star Repositories</button>
+                  </div>
+                </div>
 
-          window.location.href = "/auth";
-        }}
-        style={{ position: "fixed", bottom: "50px", right: "50px" }}
-        id="logout"
-      >
-        Logout
-      </button>
+                <div className="mt-66">
+                  <HeatMapProfile />
+                </div>
 
-      <div className="profile-page-wrapper">
-        <div className="user-profile-section">
-          <div className="profile-image"></div>
+                <button
+                  onClick={() => {
+                    localStorage.removeItem("token");
+                    localStorage.removeItem("userId");
+                    setCurrentUser(null);
 
-          <div className="name">
-            <h3>{userDetails.username}</h3>
-          </div>
-
-          <button className="follow-btn">Follow</button>
-
-          <div className="follower">
-            <p>10 Follower</p>
-            <p>3 Following</p>
-          </div>
+                    window.location.href = "/auth";
+                  }}
+                  className="absolute bottom-0 right-28 bg-red-800 active:scale-95 hover:bg-red-900 px-6 py-3 cursor-pointer rounded-full"
+                >
+                  Logout
+              </button>
+            </div>
         </div>
-
-        <div className="heat-map-section">
-          <HeatMapProfile />
-        </div>
-      </div>
-    </>
   );
 };
 

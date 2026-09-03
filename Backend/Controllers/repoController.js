@@ -186,6 +186,81 @@ const deleteRepositoryById = async (req, res) => {
     }
 }
 
+const starRepository = async (req, res) => {
+    const userId = req.user.id
+    const repoId = req.params.id
+    try {
+        const repository = await Repository.findById(repoId)
+
+        if(!repository){
+            return res.status(400).json({error: "Repository not found"})
+        }
+
+        const user = await User.findByIdAndUpdate(
+            userId,
+            {
+                $addToSet:{
+                    starRepos: repoId
+                }
+            },
+            {
+                new: true
+            }
+        )
+
+        if(!user){
+            return res.status(400).json({error: "User not found"})
+        }
+        
+        return res.status(200).json({message: "Repository starred successfully"})
+
+    } catch (error) {
+        console.error("Error starring repository: ", error.message)
+        return res.status(500).json({
+            error: "Server error"
+        })
+    }
+}
+
+const unstarRepository = async (req, res) => {
+    const repoId = req.params.id
+    const userId = req.user.id
+    
+    try {
+        const repository = await Repository.findById(repoId)
+
+        if(!repository){
+            return res.status(400).json({error: "Repository not found"})
+        }
+
+        const user = await User.findByIdAndUpdate(
+            userId,
+            {
+                $pull: {
+                    starRepos: repository._id
+                }
+            },
+            {
+                new: true
+            }
+        )
+
+        if(!user){
+            return res.status(400).json({error: "User not found"})
+        }
+
+        return res.status(200).json({
+            message: "Repository unstarred successfully"
+        })
+
+    } catch (error) {
+        console.error("Error unstarring repository: ", error.message)
+        return res.status(500).json({
+            error: "Server error"
+        })
+    }
+}
+
 module.exports = {
     createRepository,
     getAllRepositories,
@@ -195,4 +270,6 @@ module.exports = {
     updateRepositoryById,
     toggleVisibilityById,
     deleteRepositoryById,
+    starRepository,
+    unstarRepository
 };

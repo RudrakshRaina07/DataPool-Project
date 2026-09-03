@@ -11,6 +11,7 @@ const RepoDetail = () => {
     
     const [repo, setRepo] = useState("")
     const [issues, setIssues] = useState([])
+    const [isStarred, setIsStarred] = useState(false)
 
     const token = localStorage.getItem("token")
     const currentUserId = localStorage.getItem("userId")
@@ -25,6 +26,20 @@ const RepoDetail = () => {
 
                 const issuesArr = res.data.issues;
                 setIssues(issuesArr)
+
+                const userId = localStorage.getItem("userId")
+
+                if(userId){
+                    const userResponse = await axios.get(`http://localhost:3000/userProfile/${userId}`)
+
+                    const starredRepository = userResponse.data.starRepos || []
+
+                    const alreadyStarred = starredRepository.some(
+                        (repo) => repo._id.toString() === id
+                    )
+
+                    setIsStarred(alreadyStarred)
+                }
 
             } catch (error) {
                 console.error("Error fetching repo: ", error)
@@ -71,15 +86,54 @@ const RepoDetail = () => {
         }
     }
 
+    const handleStarRepository = async () => {
+        try {
+            await axios.post(`http://localhost:3000/repo/star/${id}`, 
+                {},
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                }
+            )
+
+            setIsStarred(true)
+        } catch (error) {
+            console.error("Error starring repository: ",error)
+        }
+    }
+
+    const handleUnstarRepository = async () => {
+        try {
+            await axios.delete(`http://localhost:3000/repo/star/${id}`, {
+                headers:{
+                    Authorization: `Bearer ${token}`
+                }
+            })
+            setIsStarred(false)
+        } catch (error) {
+            console.error("Error unstarring repository: ", error)
+        }
+    }
+
     return (
         <div className='bg-[#090040] min-h-screen text-white flex flex-col items-center overflow'>
             <Navbar />
             <div className='bg-[#471396] min-h-screen w-[95%] rounded-xl m-4 p-5 overflow'>
                 <div className='border p-6 rounded-xl'>
-                    <h1 onClick={() => {
-                        navigate(`/repo/content/${repo._id}`)
-                    }} 
-                    className='font-bold text-2xl mb-3 capitalize cursor-pointer'>Repository Name : <span className='hover:text-indigo-400'>{repo.name}</span></h1>
+                    <div className="flex gap-14 align-middle items-center mb-5">
+                        <h1 onClick={() => {
+                            navigate(`/repo/content/${repo._id}`)
+                        }} 
+                        className='font-bold text-2xl mb-3 capitalize cursor-pointer'>Repository Name : <span className='hover:text-indigo-400'>{repo.name}</span></h1>
+                        
+                        <button
+                            onClick={isStarred ? handleUnstarRepository : handleStarRepository}
+                            className={`px-6 py-3 font-medium cursor-pointer rounded-full active:scale-95  ${isStarred ? "bg-yellow-500 text-black hover:bg-yellow-600" : "bg-gray-700 hover:bg-gray-800"}`}
+                        >
+                            {isStarred ? "Unstar" : "Star"}
+                        </button>
+                    </div>
                     <p className='font-medium text-lg text-gray-500 mb-6'>Description : {repo.description}</p>
                     <span
                         className={`rounded-full font-medium py-3 px-6 ${repo.visibility ? "bg-green-700" : "bg-gray-700"}`}
