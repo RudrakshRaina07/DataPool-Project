@@ -6,7 +6,7 @@ const User = require("../models/userModel")
 
 const getAllUsers = async (req,res) => {
     try{
-        const users = await User.find({}).populate("repositories").populate("followedUsers").populate("starRepos")
+        const users = await User.find({}).populate("repositories").populate("followedUsers").populate("starRepos").populate("followedUsers").populate("followers")
 
         res.json(users);
     }catch(err){
@@ -97,6 +97,8 @@ const getUserProfile = async (req, res) => {
                         .populate("repositories")
                         .populate("followedUsers")
                         .populate("starRepos")
+                        .populate("followers")
+                        .populate("followedUsers")
                         .select("-password")
 
         if(!user){
@@ -166,6 +168,96 @@ const deleteUserProfile = async (req, res) => {
     }
 }
 
+const followUser = async (req, res) => {
+    const currentUserId = req.user.id
+    const targetUserId = req.params.id
+
+    try {
+        if(currentUserId === targetUserId){
+            return res.status(400).json({error: "You cannot follow yourself"})
+        }
+
+        const targetUser = await User.findById(targetUserId)
+        if(!targetUser){
+            return res.status(400).json({error: "User not found"})
+        }
+
+        const currentUser = await User.findById(currentUserId)
+        if(!currentUser){
+            return res.status(400).json({error: "Current user not found"})
+        }
+
+        await User.findByIdAndUpdate(
+            currentUserId,
+            {
+                $addToSet: {
+                    followedUsers: targetUserId
+                }
+            }
+        )
+
+        await User.findByIdAndUpdate(
+            targetUserId,
+            {
+                $addToSet: {
+                    followers: currentUserId
+                }
+            }
+        )
+
+        return res.status(200).json({
+            message: "User followed successfully"
+        })
+
+    } catch (error) {
+        console.error("Error following user: ", error)
+        return res.status(500).json({message: "Server error"})
+    }
+}
+
+const unfollowUser = async (req, res) => {
+    const currentUserId = req.user._id
+    const targetUserId = req.params
+    
+    try {
+        const targetUser = await User.findById(targetUserId)
+        if(!targetUser){
+            return res.status(400).json({error: "User not found"})
+        }
+
+        const currentUser = await User.findById(currentUserId)
+        if(!currentUser){
+            return res.status(400).json({error: "Current user not found"})
+        }
+
+        await User.findByIdAndUpdate(
+            currentUserId,
+            {
+                $pull: {
+                    followedUsers: targetUserId,
+                }
+            }
+        )
+
+        await User.findByIdAndUpdate(
+            targetUserId,
+            {
+                $pull:{
+                    followers: currentUserId
+                }
+            }
+        )
+
+        return res.status(200).json({
+            message: "User unfollowed successfully"
+        })
+
+    } catch (error) {
+        console.error("Error unfollowing user: ", error)
+        return res.status(500).json({message: "Server error"})
+    }
+}
+
 module.exports = {
     getAllUsers,
     signup,
@@ -173,4 +265,6 @@ module.exports = {
     getUserProfile,
     updateUserProfile,
     deleteUserProfile,
+    followUser,
+    unfollowUser
 };

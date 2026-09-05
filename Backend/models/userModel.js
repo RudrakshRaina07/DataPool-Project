@@ -30,6 +30,12 @@ const UserSchema = new Schema({
         ref: "User",
     }],
 
+    followers: [{
+        type: Schema.Types.ObjectId,
+        ref: "User",
+        default: []
+    }],
+
     starRepos: [{
         default: [],
         type: Schema.Types.ObjectId,
