@@ -50,7 +50,14 @@ const Profile = () => {
                     </div>
                   </div>
                   <div className="h-10 px-10">
-                    <button className="px-8 py-4 bg-indigo-500 rounded-full font-semibold text-lg active:scale-95 hover:bg-indigo-600 cursor-pointer">Star Repositories</button>
+                    <button 
+                      className="px-8 py-4 bg-indigo-500 rounded-full font-semibold text-lg active:scale-95 hover:bg-indigo-600 cursor-pointer"
+                      onClick={()=>{
+                        navigate('/profile/starred')
+                      }}
+                      >
+                        Star Repositories
+                      </button>
                   </div>
                 </div>
 

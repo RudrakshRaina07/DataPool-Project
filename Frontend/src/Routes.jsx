@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import {useNavigate, useRoutes} from 'react-router-dom';
+import {Routes, useNavigate, useRoutes} from 'react-router-dom';
 
 // PAGES LIST
 import Dashboard from "./components/dashboard/Dashboard";
@@ -14,6 +14,7 @@ import CreateIssue from './components/issue/CreateIssue';
 import RepoContent from './components/repo/RepoContent';
 import CommitHistory from './components/commit/commitHistory';
 import ProtectedRoute from './ProtectedRoute';
+import StarRepos from './components/repo/starRepos';
 
 const ProjectRoutes = () => {
     const {currentUser, setCurrentUser} = useAuth();
@@ -71,6 +72,10 @@ const ProjectRoutes = () => {
         {
             path:  "/commit/repository/:id",
             element: <CommitHistory/>
+        },
+        {
+            path: "/profile/starred",
+            element: <StarRepos/>
         }
     ]);
 
