@@ -15,12 +15,21 @@ const Navbar = () => {
           <h3 className="text-3xl hover:cursor-pointer">DataPool</h3>
         </div>
       </Link>
-      <div className="flex justify-between gap-10 mr-16">
+      <div className="flex justify-between gap-10 mr-10">
         <Link to="/create">
-          <p className="hover:cursor-pointer">Create a Repository</p>
+          <div className=" px-6 py-3 rounded-full bg-indigo-600 cursor-pointer active:scale-95 hover:bg-indigo-700">
+            <p className="font-medium">Create a Repository</p>
+          </div>
+        </Link>
+        <Link to="/allUsers">
+          <div className=" px-6 py-3 rounded-full bg-indigo-600 cursor-pointer active:scale-95 hover:bg-indigo-700">
+            <p className="hover:cursor-pointer">Users</p>
+          </div>
         </Link>
         <Link to="/profile">
-          <p className="hover:cursor-pointer">Profile</p>
+          <div className=" px-6 py-3 rounded-full bg-indigo-600 cursor-pointer active:scale-95 hover:bg-indigo-700">
+            <p className="hover:cursor-pointer">Profile</p>
+          </div>
         </Link>
       </div>
     </nav>

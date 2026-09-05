@@ -15,6 +15,7 @@ import RepoContent from './components/repo/RepoContent';
 import CommitHistory from './components/commit/commitHistory';
 import ProtectedRoute from './ProtectedRoute';
 import StarRepos from './components/repo/starRepos';
+import User from './components/user/User';
 
 const ProjectRoutes = () => {
     const {currentUser, setCurrentUser} = useAuth();
@@ -54,6 +55,10 @@ const ProjectRoutes = () => {
             element: <Profile/>
         },
         {
+            path: "/profile/:id",
+            element: <Profile/>
+        },
+        {
             path: "/create",
             element: <ProtectedRoute><CreateRepo/></ProtectedRoute>
         },
@@ -76,6 +81,10 @@ const ProjectRoutes = () => {
         {
             path: "/profile/starred",
             element: <StarRepos/>
+        },
+        {
+            path: "/allUsers",
+            element: <User/>
         }
     ]);
 
