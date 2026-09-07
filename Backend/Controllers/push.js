@@ -11,7 +11,6 @@ async function pushRepo() {
 
     try{
         const configData = await fs.readFile(configPath, "utf-8");
-
         const config = JSON.parse(configData)
 
         const commitId = await fs.readFile(headPath, "utf-8")
@@ -51,7 +50,7 @@ async function pushRepo() {
                         commitId: cleanCommitId,
                         s3Key: s3Key,
                     }
-                }
+                },
             )
         }
 

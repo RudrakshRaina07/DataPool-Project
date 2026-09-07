@@ -26,7 +26,7 @@ const Profile = () => {
           );
           setUserDetails(response.data);
 
-          const alreadyFollowing = response.data.followedUsers?.some(
+          const alreadyFollowing = response.data.followers?.some(
             (user) => user._id === userId
           )
 
@@ -130,7 +130,7 @@ const Profile = () => {
                 </div>
 
                 <div className="mt-66">
-                  <HeatMapProfile />
+                  <HeatMapProfile userId={profileUserId} />
                 </div>
 
                 {profileUserId === userId && (

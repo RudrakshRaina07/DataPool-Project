@@ -5,7 +5,7 @@ const authMiddleware = require("../middleware/authMiddleware");
 const repoRouter = express.Router();
 
 repoRouter.get("/repo/all", repoController.getAllRepositories);
-repoRouter.post("/repo/create", authMiddleware, repoController.createRepository);
+repoRouter.post("/repo/create", repoController.createRepository);
 repoRouter.post("/repo/star/:id", authMiddleware, repoController.starRepository)
 repoRouter.delete("/repo/star/:id", authMiddleware, repoController.unstarRepository)
 repoRouter.get("/repo/name/:name", repoController.fetchRepositoryByName);

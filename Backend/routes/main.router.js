@@ -4,13 +4,15 @@ const userRouter = require("./user.router");
 const repoRouter = require("./repo.router");
 const issueRouter = require('./issue.router');
 const fileRouter = require("./file.router");
-const commitRouter = require("./commit.router")
+const commitRouter = require("./commit.router");
+const contributionRouter = require("./contribution.router");
 
 mainRouter.use(userRouter);
 mainRouter.use(repoRouter);
 mainRouter.use(issueRouter);
 mainRouter.use(fileRouter)
 mainRouter.use(commitRouter)
+mainRouter.use(contributionRouter)
 
 mainRouter.get("/", (req, res) => {
     res.send("Welcome!");

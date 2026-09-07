@@ -1,57 +1,66 @@
 import React, { useEffect, useState } from "react";
 import HeatMap from "@uiw/react-heat-map";
-
-const generateActivityData = (startDate, endDate) => {
-  const data = [];
-  let currentDate = new Date(startDate);
-  const end = new Date(endDate);
-
-  while (currentDate <= end) {
-    const count = Math.floor(Math.random() * 50);
-    data.push({
-      date: currentDate.toISOString().split("T")[0], 
-      count: count,
-    });
-    currentDate.setDate(currentDate.getDate() + 1);
-  }
-
-  return data;
-};
+import axios from "axios";
 
 const getPanelColors = (maxCount) => {
   const colors = {};
   for (let i = 0; i <= maxCount; i++) {
-    const greenValue = Math.floor((i / maxCount) * 255);
+    const greenValue = maxCount === 0 ? 0 : Math.floor((i / maxCount) * 255);
     colors[i] = `rgb(0, ${greenValue}, 0)`;
   }
 
   return colors;
 };
 
-const HeatMapProfile = () => {
-  const currentYear = new Date().getFullYear();
-  const [activityData, setActivityData] = useState([]);
-  const [panelColors, setPanelColors] = useState({});
+const HeatMapProfile = ({userId}) => {
+  console.log(userId);
+  
+  const currentYear = new Date().getFullYear()
+  
+  const [activityData, setActivityData] = useState([])
+  const [panelColors, setPanelColors] = useState({})
 
   useEffect(() => {
     const fetchData = async () => {
-      const startDate = `${currentYear}-01-01`;
-      const endDate = `${currentYear}-12-31`;
-      const data = generateActivityData(startDate, endDate);
-      setActivityData(data);
+      console.log("Fetching contributions for:", userId);
+      if(!userId){
+        console.log("No",userId);
+        
+        return;
+      }
+      try {
+        const response = await axios.get(`http://localhost:3000/contributions/${userId}`)
+        const contributions = response.data;
+        console.log("API response",response.data);
+        
 
-      const maxCount = Math.max(...data.map((d) => d.count));
-      setPanelColors(getPanelColors(maxCount));
-    };
+        const data = contributions.map((contribution) => ({
+          date: new Date(contribution.date)
+                .toISOString()
+                .split("T")[0],
+          count: contribution.count
+        }))
 
-    fetchData();
-  }, []);
+        console.log("Heatmap data:", data);
+        
+        setActivityData(data)
+
+        const maxCount = data.length > 0 ? Math.max(...data.map((d) => d.count)) : 0;
+
+        setPanelColors(getPanelColors(maxCount))
+
+      } catch (error) {
+        console.error("Error fetching contribution data: ", error.message)
+      }
+    }
+    fetchData()
+  }, [userId])
 
   return (
     <div>
       <h4>Recent Contributions</h4>
       <HeatMap
-        className="HeatMapProfile"
+        className=""
         style={{ minWidth: "1200px" , height: "200px", color: "white" }}
         value={activityData}
         weekLabels={["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]}

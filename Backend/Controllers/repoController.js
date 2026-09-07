@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const Repository = require("../models/repoModel");
 const User = require("../models/userModel");
 const Issue = require("../models/issueModel");
+const { recordContribution } = require("./contributionController");
 
 const createRepository = async (req, res) => {
     const {name, description, content, visibility, issues} = req.body;
@@ -25,6 +26,8 @@ const createRepository = async (req, res) => {
         });
 
         const result = await newRepository.save();
+
+        // await recordContribution(id)
 
         res.status(201).json({
             message: "Repository created successfully",
@@ -99,7 +102,7 @@ const fetchRepositoriesForCurrentUser = async (req, res) => {
 }
 
 const updateRepositoryById = async (req, res) => {
-    const id = req.params.id;
+    const id = req.params.id
     const {content, description} = req.body;
     
     try{
@@ -122,6 +125,7 @@ const updateRepositoryById = async (req, res) => {
         }
 
         const updatedRepo = await repository.save();
+        await recordContribution(repository.owner.toString())
 
         res.json({
             message:"Repository updated successfully",
