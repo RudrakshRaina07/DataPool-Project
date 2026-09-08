@@ -27,7 +27,7 @@ const createRepository = async (req, res) => {
 
         const result = await newRepository.save();
 
-        // await recordContribution(id)
+        await recordContribution(newRepository.owner.toString())
 
         res.status(201).json({
             message: "Repository created successfully",

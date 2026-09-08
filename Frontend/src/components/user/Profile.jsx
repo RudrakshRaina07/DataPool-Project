@@ -134,18 +134,20 @@ const Profile = () => {
                 </div>
 
                 {profileUserId === userId && (
-                  <button
-                      onClick={() => {
-                        localStorage.removeItem("token");
-                        localStorage.removeItem("userId");
-                        setCurrentUser(null);
+                  <div className="flex justify-end mt-10">
+                    <button
+                        onClick={() => {
+                          localStorage.removeItem("token");
+                          localStorage.removeItem("userId");
+                          setCurrentUser(null);
 
-                        window.location.href = "/auth";
-                      }}
-                      className="absolute bottom-0 right-28 bg-red-800 active:scale-95 hover:bg-red-900 px-6 py-3 cursor-pointer rounded-full"
-                    >
-                      Logout
-                  </button>
+                          window.location.href = "/auth";
+                        }}
+                        className=" bg-red-800 active:scale-95 hover:bg-red-900 px-6 py-3 cursor-pointer rounded-full"
+                      >
+                        Logout
+                    </button>
+                  </div>
                 )}
             </div>
         </div>
