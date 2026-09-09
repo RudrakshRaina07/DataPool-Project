@@ -40,15 +40,10 @@ const recordContribution = async (userId) => {
 const getContribution = async (req, res) => {
     const userId = req.params.userId    
 
-    console.log(userId);
-    
-
     try {
         const contribution = await Contribution.find({
             userId
         }).sort({date: 1})
-
-         console.log("Found contributions:", contribution);
 
         return res.status(200).json(contribution)
 

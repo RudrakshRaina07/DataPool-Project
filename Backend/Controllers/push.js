@@ -8,6 +8,7 @@ async function pushRepo() {
     const commitsPath = path.join(repoPath, "commits");
     const configPath = path.join(repoPath, "config.json")
     const headPath = path.join(repoPath, "HEAD")
+    const stagedPath = path.join(repoPath, "staging")
 
     try{
         const configData = await fs.readFile(configPath, "utf-8");
@@ -18,7 +19,6 @@ async function pushRepo() {
         const cleanCommitId = commitId.trim()
 
         const commitPath = path.join(commitsPath, cleanCommitId);
-        const files = await fs.readdir(commitPath);
 
         const commitData = await fs.readFile(
             path.join(commitPath, "commit.json"),
@@ -27,13 +27,19 @@ async function pushRepo() {
             
         const commitInfo = JSON.parse(commitData)
 
-        for(const file of files){
+        if(!commitInfo.files || commitInfo.files.length === 0){
+            console.log("Nothing to push");
+            return;
+        }
+        
+
+        for(const file of commitInfo.files){
             if(file === "commit.json") continue;
 
-            const filePath = path.join(commitPath, file);
+            const filePath = file.filePath
             const fileContent = await fs.readFile(filePath);
 
-            const s3Key = `commits/${cleanCommitId}/${file}`
+            const s3Key = `commits/${cleanCommitId}/${file.fileName}`
 
             const params = {
                 Bucket: S3_BUCKET,
@@ -43,10 +49,12 @@ async function pushRepo() {
 
             await s3.upload(params).promise();
 
+            console.log(`Uploaded ${file.fileName} to datapool`);
+
             await axios.put(`http://localhost:3000/repo/update/${config.repoId}`,
                 {
                     content: {
-                        fileName: file,
+                        fileName: file.fileName,
                         commitId: cleanCommitId,
                         s3Key: s3Key,
                     }
@@ -62,6 +70,8 @@ async function pushRepo() {
         })
 
         console.log("All commits pushed to S3"); 
+        console.log("staging area cleared");
+        
     }catch(err){
         console.log("Error pushing to s3:", err);
     }
