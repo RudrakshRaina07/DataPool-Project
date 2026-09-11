@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import Navbar from '../Navbar';
 import { useNavigate } from 'react-router-dom';
+import BackButton from '../backButton';
 
 const starRepos = () => {
     const [starredRepos, setStarredRepos] = useState([])
@@ -44,6 +45,7 @@ const starRepos = () => {
         <div className='bg-[#090040] min-h-screen text-white flex flex-col items-center overflow'>
             <Navbar />
             <div className='bg-[#471396] min-h-screen w-[95%] rounded-xl m-4 p-5 overflow'>
+            <BackButton/>
                 <h1 className="text-3xl font-bold mb-10 text-gray-400">Starred Repositories</h1>
 
                 {starredRepos.length === 0 ? (

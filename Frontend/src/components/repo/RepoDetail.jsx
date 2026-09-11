@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { useEffect } from 'react'
 import axios from 'axios'
 import { useNavigate, useParams } from 'react-router-dom'
+import BackButton from '../backButton';
 
 const RepoDetail = () => {
     const {id} = useParams()
@@ -120,6 +121,7 @@ const RepoDetail = () => {
         <div className='bg-[#090040] min-h-screen text-white flex flex-col items-center overflow'>
             <Navbar />
             <div className='bg-[#471396] min-h-screen w-[95%] rounded-xl m-4 p-5 overflow'>
+            <BackButton/>
                 <div className='border p-6 rounded-xl'>
                     <div className="flex gap-14 align-middle items-center mb-5">
                         <h1 onClick={() => {

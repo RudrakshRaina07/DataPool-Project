@@ -3,6 +3,7 @@ import { useEffect } from 'react'
 import { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import Navbar from '../Navbar'
+import BackButton from '../backButton';
 
 const RepoContent = () => {
     const {id} = useParams()
@@ -60,6 +61,7 @@ const RepoContent = () => {
         <div className='bg-[#090040] min-h-screen text-white flex flex-col items-center overflow'>
             <Navbar />
             <div className='bg-[#471396] min-h-screen w-[95%] rounded-xl m-4 p-6 overflow'>
+            <BackButton/>
                 {repo.content && repo.content.length > 0 ? (
                 <>
                     <div>

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Navbar from '../Navbar';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
+import BackButton from '../backButton';
 
 
 const commitHistory = () => {
@@ -26,6 +27,7 @@ const commitHistory = () => {
         <div className='bg-[#090040] min-h-screen text-white flex flex-col items-center overflow'>
             <Navbar />
             <div className='bg-[#471396] min-h-screen w-[95%] rounded-xl m-4 p-5 overflow'>
+                <BackButton/>
                 <h1 className="text-2xl font-bold mb-5">Commit History :</h1>
 
                 {commits.length === 0 ? (

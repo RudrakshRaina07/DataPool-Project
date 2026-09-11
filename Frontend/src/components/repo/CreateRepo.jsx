@@ -1,6 +1,7 @@
 import axios from 'axios'
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import BackButton from '../backButton';
 
 const CreateRepo = () => {
     const [name, setName] = useState("")
@@ -42,6 +43,13 @@ const CreateRepo = () => {
             
         } catch (error) {
             console.error("Error creating repository :", error);
+            if(error.response?.status === 401){
+                localStorage.removeItem("userId")
+                localStorage.removeItem("token")
+
+                navigate("/auth")
+                return;
+            }
             alert("Failed to create repository")
             setLoading(false)
         }
@@ -50,6 +58,7 @@ const CreateRepo = () => {
   return (
     <div className="flex flex-col justify-between min-h-screen bg-[#090040] items-center text-white overflow-auto ">
         <div className="bg-[#471396] mt-10 w-[50%]  p-8 rounded-2xl flex flex-col gap-10 ">
+            <BackButton/>
                 <div className='flex justify-center items-center'>
                     <h1 className='font-bold text-2xl'>Fill the required details</h1>
                 </div>

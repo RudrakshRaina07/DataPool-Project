@@ -1,0 +1,19 @@
+{
+  "name": "datapool",
+  "version": "1.0.0",
+  "description": "Datapool command line interface",
+  "license": "MIT",
+  "author": "Rudraksh Raina",
+  "type": "commonjs",
+  "main": "bin/datapool.js",
+  "bin": {
+    "datapool": "bin/datapool.js"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "axios": "^1.20.0",
+    "uuid": "^14.0.2"
+  }
+}

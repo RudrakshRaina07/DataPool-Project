@@ -1,6 +1,7 @@
 import axios from 'axios'
 import React, { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
+import BackButton from '../backButton';
 
 const CreateIssue = () => {
     const {id} = useParams()
@@ -36,6 +37,7 @@ const CreateIssue = () => {
   return (
     <div className="flex flex-col justify-between h-screen bg-[#090040] items-center text-white overflow-auto ">
         <div className="bg-[#471396] mt-10 w-[50%] h-[90%] p-8 rounded-2xl flex flex-col gap-10 ">
+            <BackButton/>
                 <div className='flex justify-center items-center'>
                     <h1 className='font-bold text-2xl'>Fill the required details</h1>
                 </div>

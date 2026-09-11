@@ -2,7 +2,7 @@ const fs = require("fs").promises;
 const path = require("path");
 
 async function addRepo(filePath) {
-    const repoPath = path.resolve(process.cwd(), ".myGit");
+    const repoPath = path.resolve(process.cwd(), ".datapool");
     const stagingPath = path.join(repoPath, "staging");
     const stagingFile = path.join(stagingPath, "staging.json")
     

@@ -1,10 +1,9 @@
 const fs = require("fs").promises;
 const path = require("path");
-const {s3, S3_BUCKET} = require("../Config/aws-config");
 const axios = require("axios")
 
 async function pushRepo() {
-    const repoPath = path.resolve(process.cwd(), ".myGit");
+    const repoPath = path.resolve(process.cwd(), ".datapool");
     const commitsPath = path.join(repoPath, "commits");
     const configPath = path.join(repoPath, "config.json")
     const headPath = path.join(repoPath, "HEAD")
@@ -16,6 +15,11 @@ async function pushRepo() {
         const commitId = await fs.readFile(headPath, "utf-8")
 
         const cleanCommitId = commitId.trim()
+
+        if(!cleanCommitId){
+            console.log("Nothing to push");
+            return;
+        }
 
         const commitPath = path.join(commitsPath, cleanCommitId);
 
@@ -33,20 +37,18 @@ async function pushRepo() {
         
 
         for(const file of commitInfo.files){
-            if(file === "commit.json") continue;
-
             const filePath = file.filePath
             const fileContent = await fs.readFile(filePath);
 
-            const s3Key = `commits/${cleanCommitId}/${file.fileName}`
+            const response = await axios.post("http://localhost:3000/file/upload", 
+                {
+                    fileName: file.fileName,
+                    commitId: cleanCommitId,
+                    content: fileContent
+                }
+            )
 
-            const params = {
-                Bucket: S3_BUCKET,
-                Key: s3Key,
-                Body: fileContent,
-            };
-
-            await s3.upload(params).promise();
+            const s3Key = response.data.s3Key
 
             console.log(`Uploaded ${file.fileName} to datapool`);
 

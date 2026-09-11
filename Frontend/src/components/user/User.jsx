@@ -2,6 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import Navbar from '../Navbar';
 import { useNavigate } from 'react-router-dom';
+import BackButton from '../backButton';
 
 const User = () => {
     const userId = localStorage.getItem("userId")
@@ -38,6 +39,7 @@ const User = () => {
         <div className='bg-[#090040] min-h-screen text-white flex flex-col items-center overflow'>
             <Navbar />
             <div className='bg-[#471396] min-h-screen w-[95%] rounded-xl m-4 p-5 overflow'>
+            <BackButton />
                 <div className="py-4">
                     <h1 className="text-xl font-bold">Users</h1>
                 </div>

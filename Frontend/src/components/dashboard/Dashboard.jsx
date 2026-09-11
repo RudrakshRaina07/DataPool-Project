@@ -60,6 +60,7 @@ const Dashboard = () => {
                 <div className='bg-linear-to-br from-[#471396] to-[#6b21a8] w-[25%] p-7 leading-8 rounded-xl'>
                     <h3 className='text-2xl font-bold mb-5'>Suggested Repositories :</h3>
                     {suggestedRepositories.map((repo) =>{
+                        if(repo.visibility === false) return null
                         return(
                             <div 
                                 className='text-lg border m-4 rounded-2xl p-4  w-full transition-all duration-250 hover:-translate-y-1.5 hover:shadow-xl hover:border-[#B13BFF] hover:border-2'

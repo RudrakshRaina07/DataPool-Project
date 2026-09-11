@@ -5,6 +5,7 @@ import "./profile.css";
 import Navbar from "../Navbar";
 import HeatMapProfile from "./HeatMap";
 import { useAuth } from "../../authContext";
+import BackButton from "../backButton";
 
 const Profile = () => {
   const {id} = useParams();
@@ -64,6 +65,14 @@ const Profile = () => {
       }))
 
     } catch (error) {
+      if(error.response?.status === 401){
+        localStorage.removeItem("userId")
+        localStorage.removeItem("token")
+
+        navigate("/auth")
+        return;
+      }
+
       console.error("Error following user: ", error.response?.data || error.message)
     }
   }
@@ -89,6 +98,14 @@ const Profile = () => {
       }))
 
     } catch (error) {
+      if(error.response?.status === 401){
+        localStorage.removeItem("userId")
+        localStorage.removeItem("token")
+
+        navigate("/auth")
+        return;
+      }
+
       console.error("Error unfollowing user: ", error.response?.data || error.message)
     }
   }
@@ -97,9 +114,9 @@ const Profile = () => {
         <div className='bg-[#090040] min-h-screen text-white flex flex-col items-center overflow'>
             <Navbar />
             <div className='bg-[#471396] min-h-screen w-[95%] rounded-xl m-4 p-6 overflow'>
+              <BackButton/>
                 <div className="flex justify-between items-center mb-10">
-                  <div className="">
-
+                  <div>
                     <div className="capitalize py-4 flex gap-10 items-center">
                       <h3 className="text-2xl font-bold ">{userDetails.username}</h3>
                       {userId !== profileUserId && (
