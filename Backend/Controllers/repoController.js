@@ -113,11 +113,20 @@ const updateRepositoryById = async (req, res) => {
         }
 
         if(content){
-            repository.content.push({
+            const alreadyExists = repository.content.some(
+                item=>
+                    item.fileName === content.fileName &&
+                    item.commitId === content.commitId
+            )
+
+            if(!alreadyExists){
+                repository.content.push({
                 fileName: content.fileName,
                 commitId: content.commitId,
                 s3Key: content.s3Key
             });
+
+            }
         }
 
         if(description){

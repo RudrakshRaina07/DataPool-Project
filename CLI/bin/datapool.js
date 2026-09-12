@@ -32,6 +32,19 @@ if(command === "init"){
 }else if(command === "push"){
     const pushRepo = require("../commands/push")
     pushRepo()
+}else if(command === "pull"){
+    const pullRepo = require("../commands/pull");
+    pullRepo()
+}else if(command === "revert"){
+    const commitId = process.argv[3]
+
+    if(!commitId){
+        console.log("Please provide a commit ID");
+        process.exit(1)
+    }
+
+    const revertRepo = require("../commands/revert")
+    revertRepo(commitId)
 }
 else{
     console.log("Datapool CLI");
