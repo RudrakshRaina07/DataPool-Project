@@ -98,7 +98,6 @@ const getUserProfile = async (req, res) => {
                         .populate("followedUsers")
                         .populate("starRepos")
                         .populate("followers")
-                        .populate("followedUsers")
                         .select("-password")
 
         if(!user){
@@ -172,6 +171,10 @@ const followUser = async (req, res) => {
     const currentUserId = req.user.id
     const targetUserId = req.params.id
 
+    console.log("FOLLOW REQUEST");
+    console.log("Current user:", currentUserId);
+    console.log("Target user:", targetUserId);
+
     try {
         if(currentUserId === targetUserId){
             return res.status(400).json({error: "You cannot follow yourself"})
@@ -187,23 +190,41 @@ const followUser = async (req, res) => {
             return res.status(400).json({error: "Current user not found"})
         }
 
-        await User.findByIdAndUpdate(
+        const updatedCurrentUser = await User.findByIdAndUpdate(
             currentUserId,
             {
                 $addToSet: {
                     followedUsers: targetUserId
                 }
+            },
+            {
+                new: true
             }
         )
 
-        await User.findByIdAndUpdate(
+        const updatedTargetUser=  await User.findByIdAndUpdate(
             targetUserId,
             {
                 $addToSet: {
                     followers: currentUserId
                 }
+            },
+            {
+                new: true
             }
         )
+
+        console.log("Updated current user:");
+        console.log(updatedCurrentUser);
+
+        console.log("Updated target user:");
+        console.log(updatedTargetUser);
+        
+        const checkTarget = await User.findById(targetUserId);
+
+        console.log("TARGET FROM DATABASE:");
+        console.log(checkTarget);
+
 
         return res.status(200).json({
             message: "User followed successfully"
@@ -216,8 +237,8 @@ const followUser = async (req, res) => {
 }
 
 const unfollowUser = async (req, res) => {
-    const currentUserId = req.user._id
-    const targetUserId = req.params
+    const currentUserId = req.user.id
+    const targetUserId = req.params.id
     
     try {
         const targetUser = await User.findById(targetUserId)

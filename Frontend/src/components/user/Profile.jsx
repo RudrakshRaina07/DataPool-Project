@@ -138,7 +138,7 @@ const Profile = () => {
                     <button 
                       className="px-8 py-4 bg-indigo-500 rounded-full font-semibold text-lg active:scale-95 hover:bg-indigo-600 cursor-pointer"
                       onClick={()=>{
-                        navigate('/profile/starred')
+                        navigate(`/profile/${profileUserId}/starred`)
                       }}
                       >
                         Star Repositories

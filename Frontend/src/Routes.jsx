@@ -79,7 +79,7 @@ const ProjectRoutes = () => {
             element: <CommitHistory/>
         },
         {
-            path: "/profile/starred",
+            path: "/profile/:id/starred",
             element: <StarRepos/>
         },
         {

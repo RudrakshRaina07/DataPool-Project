@@ -1,23 +1,23 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import Navbar from '../Navbar';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import BackButton from '../backButton';
 
 const starRepos = () => {
     const [starredRepos, setStarredRepos] = useState([])
     const [loading, setLoading] = useState(true)
     const navigate = useNavigate()
+    const {id} = useParams()
 
     useEffect(() => {
         const fetchStarRepository = async () => {
-            const userId = localStorage.getItem("userId")
-            if(!userId){
+            if(!id){
                 setLoading(false)
                 return;
             }
             try {
-                const response =  await axios.get(`http://localhost:3000/userProfile/${userId}`)
+                const response =  await axios.get(`http://localhost:3000/userProfile/${id}`)
 
                 console.log(response.data.starRepos);
                 
