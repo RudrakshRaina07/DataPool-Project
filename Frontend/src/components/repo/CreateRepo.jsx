@@ -2,6 +2,7 @@ import axios from 'axios'
 import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import BackButton from '../backButton';
+import API_URL from '../../api';
 
 const CreateRepo = () => {
     const [name, setName] = useState("")
@@ -22,7 +23,7 @@ const CreateRepo = () => {
 
             const owner = localStorage.getItem("token")
 
-            const res = await axios.post("http://localhost:3000/repo/create", {
+            const res = await axios.post(`${API_URL}/repo/create`, {
                 name, 
                 description, 
                 visibility, 

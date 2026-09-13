@@ -5,6 +5,7 @@ import { useEffect } from 'react'
 import axios from 'axios'
 import { useNavigate, useParams } from 'react-router-dom'
 import BackButton from '../backButton';
+import API_URL from '../../api';
 
 const RepoDetail = () => {
     const {id} = useParams()
@@ -22,7 +23,7 @@ const RepoDetail = () => {
     useEffect(() => {
         const fetchRepoAndIssue = async() => {
             try {
-                const res = await axios.get(`http://localhost:3000/repo/${id}`)
+                const res = await axios.get(`${API_URL}/repo/${id}`)
                 setRepo(res.data)
 
                 const issuesArr = res.data.issues;
@@ -31,7 +32,7 @@ const RepoDetail = () => {
                 const userId = localStorage.getItem("userId")
 
                 if(userId){
-                    const userResponse = await axios.get(`http://localhost:3000/userProfile/${userId}`)
+                    const userResponse = await axios.get(`${API_URL}/userProfile/${userId}`)
 
                     const starredRepository = userResponse.data.starRepos || []
 
@@ -61,7 +62,7 @@ const RepoDetail = () => {
 
     const handleToggleVisibility = async () => {
         try {
-            await axios.patch(`http://localhost:3000/repo/toggle/${id}`, {}, {
+            await axios.patch(`${API_URL}/repo/toggle/${id}`, {}, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -75,7 +76,7 @@ const RepoDetail = () => {
     const handleDeleteRepository = async () => {
         if(window.confirm("Are you sure you want to delete the repository? ")){
             try {
-                await axios.delete(`http://localhost:3000/repo/delete/${id}`, {
+                await axios.delete(`${API_URL}/repo/delete/${id}`, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
@@ -89,7 +90,7 @@ const RepoDetail = () => {
 
     const handleStarRepository = async () => {
         try {
-            await axios.post(`http://localhost:3000/repo/star/${id}`, 
+            await axios.post(`${API_URL}/repo/star/${id}`, 
                 {},
                 {
                     headers: {
@@ -106,7 +107,7 @@ const RepoDetail = () => {
 
     const handleUnstarRepository = async () => {
         try {
-            await axios.delete(`http://localhost:3000/repo/star/${id}`, {
+            await axios.delete(`${API_URL}/repo/star/${id}`, {
                 headers:{
                     Authorization: `Bearer ${token}`
                 }

@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import Navbar from '../Navbar'
 import BackButton from '../backButton';
+import API_URL from '../../api';
 
 const RepoContent = () => {
     const {id} = useParams()
@@ -16,7 +17,7 @@ const RepoContent = () => {
     useEffect(() => {
         const fetchRepo = async() => {
             try {
-                const res = await axios.get(`http://localhost:3000/repo/${id}`)
+                const res = await axios.get(`${API_URL}/repo/${id}`)
                 setRepo(res.data)
             } catch (error) {
                 console.error("Error in fetching repository: ", error)
@@ -29,7 +30,7 @@ const RepoContent = () => {
     const handleFileClick = async (file) => {
         try {
             setLoading(true)
-            const res = await axios.post(`http://localhost:3000/file/content`, {
+            const res = await axios.post(`${API_URL}/file/content`, {
                 s3Key: file.s3Key,
             })
 

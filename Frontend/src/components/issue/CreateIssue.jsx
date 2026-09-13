@@ -2,6 +2,7 @@ import axios from 'axios'
 import React, { useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import BackButton from '../backButton';
+import API_URL from '../../api';
 
 const CreateIssue = () => {
     const {id} = useParams()
@@ -18,7 +19,7 @@ const CreateIssue = () => {
         }
         try {
             setLoading(true)
-            const res = await axios.post(`http://localhost:3000/issue/create/${id}`, {
+            const res = await axios.post(`${API_URL}/issue/create/${id}`, {
                 title,
                 description,
             });

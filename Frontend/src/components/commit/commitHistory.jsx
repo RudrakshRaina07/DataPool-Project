@@ -3,6 +3,7 @@ import Navbar from '../Navbar';
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import BackButton from '../backButton';
+import API_URL from '../../api';
 
 
 const commitHistory = () => {
@@ -12,7 +13,7 @@ const commitHistory = () => {
     useEffect(() => {
         const getCommitHistory = async () => {
             try {
-                const res = await axios.get(`http://localhost:3000/commit/repository/${id}`)
+                const res = await axios.get(`${API_URL}/commit/repository/${id}`)
                 setCommits(res.data.commits)
 
             } catch (error) {

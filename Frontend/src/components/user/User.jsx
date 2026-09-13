@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import Navbar from '../Navbar';
 import { useNavigate } from 'react-router-dom';
 import BackButton from '../backButton';
+import API_URL from '../../api';
 
 const User = () => {
     const userId = localStorage.getItem("userId")
@@ -13,7 +14,7 @@ const User = () => {
     useEffect(() => {
         const fetchUsers = async () => {
             try {
-                const response = await axios.get(`http://localhost:3000/allUsers`)
+                const response = await axios.get(`${API_URL}/allUsers`)
 
                 setUsers(response.data)
                 setLoading(false)

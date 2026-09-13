@@ -6,6 +6,7 @@ import Navbar from "../Navbar";
 import HeatMapProfile from "./HeatMap";
 import { useAuth } from "../../authContext";
 import BackButton from "../backButton";
+import API_URL from "../../api";
 
 const Profile = () => {
   const {id} = useParams();
@@ -23,7 +24,7 @@ const Profile = () => {
       if (profileUserId) {
         try {
           const response = await axios.get(
-            `http://localhost:3000/userProfile/${profileUserId}`
+            `${API_URL}/userProfile/${profileUserId}`
           );
           setUserDetails(response.data);
 
@@ -45,7 +46,7 @@ const Profile = () => {
     const token = localStorage.getItem("token")
 
     try {
-      await axios.post(`http://localhost:3000/follow/${profileUserId}`,
+      await axios.post(`${API_URL}/follow/${profileUserId}`,
         {},
         {
           headers:{
@@ -80,7 +81,7 @@ const Profile = () => {
   const handleUnfollow = async () => {
     const token = localStorage.getItem("token")
     try {
-      await axios.delete(`http://localhost:3000/unfollow/${profileUserId}`, 
+      await axios.delete(`${API_URL}/unfollow/${profileUserId}`, 
         {
           headers: {
             Authorization: `Bearer ${token}`

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import Navbar from '../Navbar';
 import { useNavigate, useParams } from 'react-router-dom';
 import BackButton from '../backButton';
+import API_URL from '../../api';
 
 const starRepos = () => {
     const [starredRepos, setStarredRepos] = useState([])
@@ -17,7 +18,7 @@ const starRepos = () => {
                 return;
             }
             try {
-                const response =  await axios.get(`http://localhost:3000/userProfile/${id}`)
+                const response =  await axios.get(`${API_URL}/userProfile/${id}`)
 
                 console.log(response.data.starRepos);
                 

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import HeatMap from "@uiw/react-heat-map";
 import axios from "axios";
+import API_URL from "../../api";
 
 const getPanelColors = (maxCount) => {
   if(maxCount === 0){
@@ -47,7 +48,7 @@ const HeatMapProfile = ({userId}) => {
         return;
       }
       try {
-        const response = await axios.get(`http://localhost:3000/contributions/${userId}`)
+        const response = await axios.get(`${API_URL}/contributions/${userId}`)
         const contributions = response.data;        
 
         const data = contributions.map((contribution) => ({

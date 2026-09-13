@@ -3,6 +3,7 @@ import axios from 'axios';
 import "./Dashboard.css"
 import Navbar from '../Navbar';
 import { useNavigate } from 'react-router-dom';
+import API_URL from '../../api';
 
 const Dashboard = () => {
     const [repositories, setRepositories] = useState([]);
@@ -15,7 +16,7 @@ const Dashboard = () => {
         const userId = localStorage.getItem("userId");
         const fetchRepositories = async () =>{
             try {
-                const res = await axios.get(`http://localhost:3000/repo/user/${userId}`);
+                const res = await axios.get(`${API_URL}/repo/user/${userId}`);
 
                 const data = res.data;
                 console.log(data);
@@ -27,7 +28,7 @@ const Dashboard = () => {
 
         const fetchSuggestedRepostitories = async () =>{
             try {
-                const res = await axios.get(`http://localhost:3000/repo/all`);
+                const res = await axios.get(`${API_URL}/repo/all`);
 
                 const data = res.data;
                 console.log(data);
