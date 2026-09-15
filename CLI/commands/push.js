@@ -40,7 +40,7 @@ async function pushRepo() {
             const filePath = file.filePath
             const fileContent = await fs.readFile(filePath);
 
-            const response = await axios.post("http://localhost:3000/file/upload", 
+            const response = await axios.post(`${process.env.API_URL}/file/upload`, 
                 {
                     fileName: file.fileName,
                     commitId: cleanCommitId,
@@ -52,7 +52,7 @@ async function pushRepo() {
 
             console.log(`Uploaded ${file.fileName} to datapool`);
 
-            await axios.put(`http://localhost:3000/repo/update/${config.repoId}`,
+            await axios.put(`${process.env.API_URL}/repo/update/${config.repoId}`,
                 {
                     content: {
                         fileName: file.fileName,
@@ -63,7 +63,7 @@ async function pushRepo() {
             )
         }
 
-        await axios.post(`http://localhost:3000/commit/create`, {
+        await axios.post(`${process.env.API_URL}/commit/create`, {
             commitId: cleanCommitId,
             message: commitInfo.message,
             date: commitInfo.date,

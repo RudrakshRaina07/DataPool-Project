@@ -11,7 +11,7 @@ async function pullRepo() {
 
         const config = JSON.parse(configData)
 
-        const response = await axios.get(`http://localhost:3000/repo/${config.repoId}`)
+        const response = await axios.get(`${process.env.API_URL}/repo/${config.repoId}`)
 
         const repository = response.data
         const files = repository.content || []
@@ -31,7 +31,7 @@ async function pullRepo() {
         }
 
         for(const file of latestFiles.values()){
-            const fileResponse = await axios.post(`http://localhost:3000/file/content`,
+            const fileResponse = await axios.post(`${process.env.API_URL}/file/content`,
                 {
                     s3Key: file.s3Key
                 }

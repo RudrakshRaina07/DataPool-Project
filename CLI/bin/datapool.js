@@ -1,5 +1,12 @@
 #!/usr/bin/env node
 
+const path = require("path")
+const dotenv = require("dotenv")
+
+dotenv.config({
+    path: path.join(__dirname, "../.env")
+})
+
 const initRepo = require("../commands/init");
 const addRepo = require("../commands/add");
 const commitRepo = require("../commands/commit");
