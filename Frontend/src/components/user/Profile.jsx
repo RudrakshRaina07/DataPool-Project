@@ -112,32 +112,32 @@ const Profile = () => {
   }
 
   return (
-        <div className='bg-[#090040] min-h-screen text-white flex flex-col items-center overflow'>
+        <div className='bg-[#090040] min-h-screen text-white flex flex-col items-center'>
             <Navbar />
-            <div className='bg-[#471396] min-h-screen w-[95%] rounded-xl m-4 p-6 overflow'>
+            <div className='bg-[#471396] min-h-screen w-[95%] rounded-xl m-4 p-6'>
               <BackButton/>
-                <div className="flex justify-between items-center mb-10">
-                  <div>
-                    <div className="capitalize py-4 flex gap-10 items-center">
-                      <h3 className="text-2xl font-bold ">{userDetails.username}</h3>
+                <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-6 mb-10">
+                  <div className="w-full">
+                    <div className="capitalize py-4 flex flex-col sm:flex-row gap-4 sm:gap-8 sm:items-center">
+                      <h3 className="text-2xl font-bold wrap-break-word">{userDetails.username}</h3>
                       {userId !== profileUserId && (
                         <button 
                           onClick={isFollowing ? handleUnfollow : handleFollow}
-                          className=" cursor-pointer bg-green-600 active:scale-95 hover:bg-green-800 text-black px-6 py-3 rounded-full font-semibold">
+                          className= "cursor-pointer bg-green-600 active:scale-95 hover:bg-green-700 text-black px-6 py-3 rounded-full font-semibold w-full sm:w-auto transition">
                             {isFollowing ? "Unfollow" : "Follow"}
                         </button>
                       )}
 
                     </div>
 
-                    <div className="flex gap-10">
+                    <div className="flex gap-6 sm:gap-10 text-sm sm:text-base">
                       <p>{userDetails.followers?.length || 0} Follower</p>
                       <p>{userDetails.followedUsers?.length || 0} Following</p>
                     </div>
                   </div>
-                  <div className="h-10 px-10">
+                  <div className="w-full lg:w-auto">
                     <button 
-                      className="px-8 py-4 bg-indigo-500 rounded-full font-semibold text-lg active:scale-95 hover:bg-indigo-600 cursor-pointer"
+                      className="px-8 py-4 w-full lg:w-auto bg-indigo-500 rounded-full font-semibold text-lg active:scale-95 hover:bg-indigo-600 cursor-pointer transition"
                       onClick={()=>{
                         navigate(`/profile/${profileUserId}/starred`)
                       }}
@@ -147,7 +147,7 @@ const Profile = () => {
                   </div>
                 </div>
 
-                <div className="mt-66">
+                <div className="mt-10 sm:mt-16 lg:mt-20 w-full overflow-hidden">
                   <HeatMapProfile userId={profileUserId} />
                 </div>
 
@@ -161,7 +161,7 @@ const Profile = () => {
 
                           window.location.href = "/auth";
                         }}
-                        className=" bg-red-800 active:scale-95 hover:bg-red-900 px-6 py-3 cursor-pointer rounded-full"
+                        className=" bg-red-800 active:scale-95 hover:bg-red-900 px-6 py-3 cursor-pointer rounded-full font-medium transition"
                       >
                         Logout
                     </button>

@@ -57,50 +57,50 @@ const CreateRepo = () => {
     }
 
   return (
-    <div className="flex flex-col justify-between min-h-screen bg-[#090040] items-center text-white overflow-auto ">
-        <div className="bg-[#471396] mt-10 w-[50%]  p-8 rounded-2xl flex flex-col gap-10 ">
+    <div className="flex flex-col min-h-screen bg-[#090040] items-center text-white overflow-auto ">
+        <div className="bg-[#471396] mt-10 w-[95%] sm:w-[90%] md:w-[50%] p-5 sm:p-6 md:p-8 rounded-2xl flex flex-col gap-6 md:gap-10 ">
             <BackButton/>
                 <div className='flex justify-center items-center'>
-                    <h1 className='font-bold text-2xl'>Fill the required details</h1>
+                    <h1 className='font-bold text-xl sm:text-2xl text-center'>Fill the required details</h1>
                 </div>
-                <div className='w-[90%] p-3'>
-                    <label className='text-xl font-bold text-gray-400' >Name of repository :</label>
+                <div className='w-full p-2 sm:p-3'>
+                    <label className='text-lg sm:text-xl font-bold text-gray-400' >Name of repository :</label>
                     <input 
                         type='text'
                         placeholder='Enter name of repository'
-                        className="border-b w-full font-medium text-lg outline-none py-4"
+                        className="border-b w-full font-medium text-base sm:text-lg outline-none py-3 sm:py-4 bg-transparent"
                         value={name}
                         onChange={(e) => {
                             setName(e.target.value)
                         }}
                     />
                 </div>
-                <div className='w-[90%] p-3'>
-                    <label className='text-xl font-bold text-gray-400 '>Description of repository :</label>
+                <div className='w-full p-2 sm:p-3'>
+                    <label className='text-lg sm:text-xl font-bold text-gray-400 '>Description of repository :</label>
                     <textarea 
                         type='text'
                         placeholder='Enter description of the repository'
-                        className="border-b w-full font-medium text-lg outline-none py-6"
+                        className="border-b w-full font-medium text-base sm:text-lg outline-none py-4 sm:py-6 bg-transparent resize-none"
                         value={description}
                         onChange={(e) => {
                             setDescription(e.target.value)
                         }}
                     />
                 </div>
-                <div className='w-[90%] p-5 gap-10 flex'>
-                    <label className='text-xl font-bold text-gray-400 ' > Set visibility of repository :</label>
+                <div className='w-full p-3 sm:p-5 gap-4 sm:gap-6 flex flex-col sm:flex-row sm:items-center'>
+                    <label className='text-lg sm:text-xl font-bold text-gray-400 ' > Set visibility of repository :</label>
                     <button 
                         onClick={() =>{
                             setVisibility(true)
                         }}
-                        className={`px-6 py-3 rounded-full active:scale-95 cursor-pointer ${visibility ? 'bg-green-600 text-black' : 'bg-gray-600 text-white'}`}>
+                        className={`px-5 sm:px-6 py-2 sm:py-3 rounded-full active:scale-95 cursor-pointer transition ${visibility ? 'bg-green-600 text-black' : 'bg-gray-600 text-white'}`}>
                         Public
                     </button>
                     <button 
                         onClick={() =>{
                             setVisibility(false)
                         }}                        
-                        className={`px-6 py-3 rounded-full active:scale-95 cursor-pointer ${visibility ? 'bg-gray-600 text-white' : 'bg-green-600 text-black'}`}>
+                        className={`px-5 sm:px-6 py-2 sm:py-3 rounded-full active:scale-95 cursor-pointer transition ${visibility ? 'bg-gray-600 text-white' : 'bg-green-600 text-black'}`}>
                         Private
                     </button>
                 </div>
@@ -108,25 +108,25 @@ const CreateRepo = () => {
                     <button 
                         onClick={handleSubmit}
                         disabled={loading}
-                        className="px-6 py-3 font-medium text-lg rounded-full active:scale-95 cursor-pointer bg-green-600 text-black mg-4">
+                        className="px-6 py-3 font-medium text-base sm:text-lg rounded-full active:scale-95 cursor-pointer bg-green-600 hover:bg-green-700 text-black mg-4">
                             {loading ? "Creating..." : "Create Repository"}
                         </button>
                 </div>
                 {createRepoId && (
-                    <div className='border border-green-500 rounded-xl text-center p-6 bg-[#090040] '>
-                        <h2 className='text-xl font-bold text-green-400'>Repository Created Successfully</h2>
-                        <p className='text-lg font-semibold text-gray-400 mt-4'>Run this command in your project folder:</p>
-                        <div className='break-all font-mono px-8 py-4 m-3 rounded-lg bg-black'>
+                    <div className='border border-green-500 rounded-xl text-center p-4 sm:p-6 bg-[#090040] '>
+                        <h2 className='text-lg sm:text-xl font-bold text-green-400'>Repository Created Successfully</h2>
+                        <p className='text-base sm:text-lg font-semibold text-gray-400 mt-4'>Run this command in your project folder:</p>
+                        <div className='break-all font-mono text-sm sm:text-base px-8 py-4 m-3 rounded-lg bg-black'>
                             node index.js init {createRepoId}
                         </div>
-                        <div className='flex gap-10 justify-center'> 
+                        <div className='flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center'> 
                             <button
                                 onClick={() => {
                                     navigator.clipboard.writeText(
                                         `node index.js init ${createRepoId}`
                                     )
                                 }}
-                                className='px-6 py-3 rounded-full bg-green-700 active:scale-95 cursor-pointer font-medium text-black'
+                                className='px-6 py-3 rounded-full bg-green-600 active:scale-95 cursor-pointer font-medium text-black hover:bg-green-700 transition'
                             >
                                 Copy command
                             </button>
@@ -135,7 +135,7 @@ const CreateRepo = () => {
                                 onClick={() => {
                                     navigate('/')
                                 }}
-                                className='px-6 py-3 rounded-full bg-indigo-500 active:scale-95 cursor-pointer font-medium text-white'                              
+                                className='px-6 py-3 rounded-full bg-indigo-600 active:scale-95 cursor-pointer font-medium text-white hover:bg-indigo-700 transition'                              
                             >
                                 Go to Dashboard
                             </button>

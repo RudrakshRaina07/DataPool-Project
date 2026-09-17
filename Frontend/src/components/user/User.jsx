@@ -29,7 +29,7 @@ const User = () => {
 
     if(loading){
         return (
-            <div className='bg-[#090040] h-screen text-white flex flex-col items-center'>
+            <div className='bg-[#090040] min-h-screen text-white flex flex-col items-center'>
                 <Navbar />
                 <h1 className='mt-10'>Loading....</h1>
             </div>
@@ -37,27 +37,27 @@ const User = () => {
     }
 
   return (
-        <div className='bg-[#090040] min-h-screen text-white flex flex-col items-center overflow'>
+        <div className='bg-[#090040] min-h-screen text-white flex flex-col items-center'>
             <Navbar />
-            <div className='bg-[#471396] min-h-screen w-[95%] rounded-xl m-4 p-5 overflow'>
+            <div className='bg-[#471396] min-h-screen w-[95%] sm:w-[92%] lg:w-[95%] rounded-xl m-4 p-5 overflow-hidden'>
             <BackButton />
                 <div className="py-4">
                     <h1 className="text-xl font-bold">Users</h1>
                 </div>
-                <div>
+                <div className="flex flex-col gap-4">
                     {users.filter((user) => user._id !== userId)
                         .map((user) => (
-                            <div key={user._id} className="flex justify-between items-center border rounded-2xl p-5">
-                                <div className="flex gap-10">
-                                    <h2 className="font-bold text-lg capitalize">{user.username}</h2>
-                                    <p className="text-gray-400">Email: {user.email}</p>
+                            <div key={user._id} className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 border rounded-2xl p-5 transition-all duration-200 hover:border-[#B13BFF] hover:shadow-lg">
+                                <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-10 min-w-0">
+                                    <h2 className="font-bold text-lg capitalize wrap-break-word">{user.username}</h2>
+                                    <p className="text-gray-400 break-all text-sm sm:text-base">Email: {user.email}</p>
                                 </div>
-                                <div>
+                                <div className="w-full sm:w-auto">
                                     <button
                                         onClick={() => {
                                             navigate(`/profile/${user._id}`)
                                         }} 
-                                        className="px-6 py-3 bg-green-600 rounded-full cursor-pointer active:scale-95 text-black font-medium hover:bg-green-700 ">
+                                        className="px-6 py-3 w-full sm:w-auto bg-green-600 rounded-full cursor-pointer active:scale-95 text-black font-medium hover:bg-green-700 transition-all">
                                         View Profile
                                     </button>
                                 </div>

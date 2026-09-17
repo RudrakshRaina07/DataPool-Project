@@ -1,14 +1,38 @@
 {
-  "name": "datapool",
+  "name": "datapool-cli",
   "version": "1.0.0",
   "description": "Datapool command line interface",
   "license": "MIT",
   "author": "Rudraksh Raina",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/RudrakshRaina07/DataPool-Project.git"
+  },
+
+  "bugs": {
+    "url": "https://github.com/RudrakshRaina07/DataPool-Project/issues"
+  },
+
+  "homepage": "https://github.com/RudrakshRaina07/DataPool-Project#readme",
   "type": "commonjs",
   "main": "bin/datapool.js",
   "bin": {
     "datapool": "bin/datapool.js"
   },
+
+  "files": [
+    "bin",
+    "commands"
+  ],
+
+  "keywords": [
+    "cli",
+    "git",
+    "version-control",
+    "datapool",
+    "repository",
+    "s3"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

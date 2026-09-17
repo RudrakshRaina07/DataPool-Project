@@ -1,9 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState} from "react";
 import axios from "axios";
 import { useAuth } from "../../authContext";
 
-import { PageHeader } from "@primer/react/experimental";
-import {Button } from "@primer/react";
 import "./auth.css";
 
 import logo from "../../assets/image.png";
@@ -41,21 +39,21 @@ const Login = () => {
   };
 
   return (
-    <div className="flex flex-col justify-between h-screen bg-[#090040] items-center text-white ">
-      <div className="bg-[#471396] mt-20 p-6 w-[30%]  rounded-2xl flex items-center flex-col">
+    <div className="flex flex-col justify-center min-h-screen bg-[#090040] items-center text-white p-4">
+      <div className="bg-[#471396] mt-20 p-6 w-full sm:w-[80%] md:w-[60%] lg:w-[40%] xl:w-[30%] rounded-2xl flex items-center flex-col">
         <div className="p-4">
-          <img className="h-20 w-20" src={logo} alt="Logo" />
+          <img className="h-16 w-16 sm:h-20 sm:w-20" src={logo} alt="Logo" />
         </div>
       <div className="font-medium text-2xl">
-          <h2 className="font-semibold mb-10 text-4xl font text-black">Login</h2>
+          <h2 className="font-semibold mb-8 sm:mb-10 text-4xl text-black">Login</h2>
       </div>
-        <div className="flex flex-col justify-between gap-7">
+        <div className="w-full sm:w-[90%] flex flex-col justify-between gap-7">
           <div>
             <input
               autoComplete="off"
               name="Email"
               id="Email"
-              className="border-b w-full font-medium text-lg outline-none"
+              className="border-b w-full bg-transparent font-medium text-lg outline-none py-2"
               placeholder="Enter Email Address"
               type="email"
               value={email}
@@ -67,7 +65,7 @@ const Login = () => {
               autoComplete="off"
               name="Password"
               id="Password"
-              className="border-b w-full font-medium text-lg outline-none"
+              className="border-b w-full font-medium text-lg outline-none py-2"
               placeholder="Enter Password"
               type="password"
               value={password}
@@ -76,16 +74,16 @@ const Login = () => {
           </div>
 
           <button
-            className="px-5 py-2 rounded-full active:scale-95 cursor-pointer bg-green-600 text-black mg-4"
+            className="px-5 py-2 rounded-full active:scale-95 cursor-pointer bg-green-600 text-black disabled:opacity-50 disabled:cursor-not-allowed"
             disabled={loading}
             onClick={handleLogin}
           >
             {loading ? "Loading..." : "Login"}
           </button>
         </div>
-        <div className="mt-4">
+        <div className="mt-4 text-center text-sm sm:text-base">
           <p>
-            New to DataPool? <Link to="/signup" className="text-green-400">Create an account</Link>
+            New to DataPool? <Link to="/signup" className="text-green-400 hover:text-green-500 hover:underline">Create an account</Link>
           </p>
         </div>
       </div>

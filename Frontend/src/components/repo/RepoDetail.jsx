@@ -119,36 +119,36 @@ const RepoDetail = () => {
     }
 
     return (
-        <div className='bg-[#090040] min-h-screen text-white flex flex-col items-center overflow'>
+        <div className='bg-[#090040] min-h-screen text-white flex flex-col items-center overflow-x-hidden'>
             <Navbar />
-            <div className='bg-[#471396] min-h-screen w-[95%] rounded-xl m-4 p-5 overflow'>
+            <div className='bg-[#471396] min-h-screen w-[95%] rounded-xl my-4 p-5 sm:p-5 overflow-hidden'>
             <BackButton/>
-                <div className='border p-6 rounded-xl'>
-                    <div className="flex gap-14 align-middle items-center mb-5">
+                <div className='border p-6 sm:p-6 rounded-xl'>
+                    <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-5 gap-4">
                         <h1 onClick={() => {
                             navigate(`/repo/content/${repo._id}`)
                         }} 
-                        className='font-bold text-2xl mb-3 capitalize cursor-pointer'>Repository Name : <span className='hover:text-indigo-400'>{repo.name}</span></h1>
+                        className='font-bold text-2xl sm:text-2xl mb-3 capitalize cursor-pointer wrap-break-word'>Repository Name : <span className='hover:text-indigo-400'>{repo.name}</span></h1>
                         
                         <button
                             onClick={isStarred ? handleUnstarRepository : handleStarRepository}
-                            className={`px-6 py-3 font-medium cursor-pointer rounded-full active:scale-95  ${isStarred ? "bg-yellow-500 text-black hover:bg-yellow-600" : "bg-gray-700 hover:bg-gray-800"}`}
+                            className={`px-6 py-3 font-medium cursor-pointer rounded-full active:scale-95 sm:w-auto shrink-0 ${isStarred ? "bg-yellow-500 text-black hover:bg-yellow-600" : "bg-gray-700 hover:bg-gray-800"}`}
                         >
                             {isStarred ? "Unstar" : "Star"}
                         </button>
                     </div>
-                    <p className='font-medium text-lg text-gray-500 mb-6'>Description : {repo.description}</p>
+                    <p className='font-medium text-base sm:text-lg text-gray-500 mb-6 wrap-break-word'>Description : {repo.description}</p>
                     <span
-                        className={`rounded-full font-medium py-3 px-6 ${repo.visibility ? "bg-green-700" : "bg-gray-700"}`}
+                        className={`inline-block rounded-full font-medium py-3 px-6 ${repo.visibility ? "bg-green-700" : "bg-gray-700"}`}
                     >{repo.visibility ? "Public" : "Private"}</span>
-                    <div className='mt-7 flex gap-10'>
+                    <div className='mt-7 flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4'>
                         {isOwner && (
                             <>
                                 <button
                                     onClick={() => {
                                         handleToggleVisibility()
                                     }}
-                                    className={`px-6 py-3 rounded-full bg-indigo-500  font-medium cursor-pointer active:scale-95`}    
+                                    className={`px-6 py-3 rounded-full bg-indigo-500 hover:bg-indigo-600 font-medium cursor-pointer active:scale-95`}    
                                 >
                                     Toggle Visibility
                                 </button>
@@ -156,7 +156,7 @@ const RepoDetail = () => {
                                     onClick={() => {
                                         handleDeleteRepository()
                                     }}
-                                    className='px-6 py-3 rounded-full bg-red-600 font-medium cursor-pointer active:scale-95'>
+                                    className='px-6 py-3 rounded-full bg-red-600 hover:bg-red-700 font-medium cursor-pointer active:scale-95'>
                                     Delete Repository
                                 </button>
                             </>
@@ -171,20 +171,20 @@ const RepoDetail = () => {
                             </button>
                     </div>
                 </div>
-                <div className='border p-6 rounded-xl mt-5'>
+                <div className='border p-6  rounded-xl mt-5'>
                     <div>
-                        <h1 className='text-2xl font-bold'>Issues :</h1>
+                        <h1 className='text-2xl font-bold mb-5'>Issues :</h1>
                         {issues.length === 0 ? (
-                            <p>
+                            <p className="texxt-base sm:text-lg">
                                 No Issues yet. Create your first issue.
                             </p>
                         ) : (
                             issues.map((issue)=> {
                                 return (
-                                    <div key={issue._id} className='rounded-2xl py-4 px-8 m-3 border-2 flex justify-between'>
-                                        <h1 className='text-xl font-semibold capitalize'>Title: {issue.title}</h1>
-                                        <p className='text-gray-500 text-lg font-medium'>Description: {issue.description}</p>
-                                        <span className={`px-6 py-3 rounded-full capitalize font-medium ${issue.status === "open" ? "bg-green-700" : "bg-red-500"}`}>{issue.status}</span>
+                                    <div key={issue._id} className='rounded-2xl py-4 px-8 my-3 border-2 flex flex-col md:flex-row md:items-center md:justify-between gap-3'>
+                                        <h1 className='text-xl font-semibold capitalize wrap-break-word'>Title: {issue.title}</h1>
+                                        <p className='text-gray-500 text-base sm:text-lg font-medium wrap-break-word'>Description: {issue.description}</p>
+                                        <span className={`px-6 py-3 rounded-full capitalize font-medium w-fit ${issue.status === "open" ? "bg-green-700" : "bg-red-500"}`}>{issue.status}</span>
                                     </div>
                                 )
                             })
@@ -195,7 +195,7 @@ const RepoDetail = () => {
                                      console.log("Current repo id:", id);
                                     navigate(`/issue/create/${id}`)
                                 }}
-                                className='px-6 py-3 rounded-full bg-green-700 font-medium'>Create Issue</button>
+                                className='px-6 py-3 rounded-full bg-green-700 font-medium cursor-pointer active:scale-95 hover:bg-green-800'>Create Issue</button>
                         </div>
                     </div>
                 </div>

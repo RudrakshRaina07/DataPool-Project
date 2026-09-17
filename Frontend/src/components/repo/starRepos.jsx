@@ -35,33 +35,33 @@ const starRepos = () => {
 
     if(loading){
         return (
-            <div className='bg-[#090040] h-screen text-white flex flex-col items-center'>
+            <div className='bg-[#090040] min-h-screen text-white flex flex-col items-center'>
                 <Navbar />
-                <h1 className='mt-10'>Loading....</h1>
+                <h1 className='mt-10 text-lg sm:text-xl'>Loading....</h1>
             </div>
         )
     }
 
   return (
-        <div className='bg-[#090040] min-h-screen text-white flex flex-col items-center overflow'>
+        <div className='bg-[#090040] min-h-screen text-white flex flex-col items-center overflow-auto'>
             <Navbar />
-            <div className='bg-[#471396] min-h-screen w-[95%] rounded-xl m-4 p-5 overflow'>
+            <div className='bg-[#471396] min-h-screen w-[95%] sm:w-[92%] md:w-[90%] rounded-xl m-4 p-5'>
             <BackButton/>
-                <h1 className="text-3xl font-bold mb-10 text-gray-400">Starred Repositories</h1>
+                <h1 className="text-2xl sm:text-3xl font-bold mb-7 sm:mb-10 text-gray-400">Starred Repositories</h1>
 
                 {starredRepos.length === 0 ? (
-                    <p className="text-lg text-gray-400">You haven't starred any repository yet.</p>
+                    <p className="text-base sm:text-lg text-gray-400">You haven't starred any repository yet.</p>
                 ) : (
-                    <div className="flex flex-col gap-10">
+                    <div className="flex flex-col gap-5 sm:gap-7 md:gap-10">
                         {starredRepos.map((repo) =>(
-                                <div key={repo._id} className="border-2 rounded-2xl p-5 " >
-                                    <div className="flex gap-14 align-middle items-center mb-5">
+                                <div key={repo._id} className="border-2 rounded-2xl p-5 transition-all duration-250 hover:-translate-y-1 hover:shadow-xl hover:border-[#B13BFF]" >
+                                    <div className="mb-3 sm:mb-5">
                                         <h1 onClick={() => {
                                             navigate(`/repo/content/${repo._id}`)
                                         }} 
-                                        className='font-bold text-2xl mb-3 capitalize cursor-pointer'>Repository Name : <span className='hover:text-indigo-400'>{repo.name}</span></h1>
+                                        className='font-bold text-2xl mb-3 capitalize cursor-pointer wrap-break-word'>Repository Name : <span className='hover:text-indigo-400'>{repo.name}</span></h1>
                                     </div>
-                                    <p className='font-medium text-lg text-gray-500 mb-6'>Description : {repo.description}</p>
+                                    <p className='font-medium text-lg text-gray-500 mb-6 wrap-break-word'>Description : {repo.description}</p>
                                 </div>
                             )
                         )}

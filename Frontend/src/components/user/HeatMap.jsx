@@ -68,8 +68,8 @@ const HeatMapProfile = ({userId}) => {
   }, [userId]);
 
   return (
-    <div className="w-full">
-      <div className="flex justify-between items-end mb-4">
+    <div className="w-full min-w-0">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end mb-4">
         <div>
           <h4 className="text-xl font-semibold">Recent Contributions</h4>
           <p className="text-sm text-gray-300 mt-1">
@@ -77,8 +77,8 @@ const HeatMapProfile = ({userId}) => {
           </p>
         </div>
       </div>
-      <div className="w-full overflow-hidden pb-3">
-        <div className="min-w-300">
+      <div className="w-full overflow-x-auto pb-3">
+        <div className="min-w-175 sm:min-w-0">
           <HeatMap 
             style={{
               width: "100%",
@@ -124,7 +124,7 @@ const HeatMapProfile = ({userId}) => {
                   }}
                 >
                 <title>
-                  {count} {count === 1 ? "contribution" : "contribution"} on {date}
+                  {count} {count === 1 ? "contribution" : "contributions"} on {date}
                 </title>
                 </rect>
               )
@@ -133,7 +133,7 @@ const HeatMapProfile = ({userId}) => {
         </div>
 
       </div>
-      <div className="flex justify-end items-center gap-2 mt-2 text-xs text-gray-300">
+      <div className="flex flex-wrap justify-end items-center gap-2 mt-2 text-xs text-gray-300">
 
         <span>Less</span>
 

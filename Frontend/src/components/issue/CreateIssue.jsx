@@ -36,13 +36,13 @@ const CreateIssue = () => {
     }
 
   return (
-    <div className="flex flex-col justify-between h-screen bg-[#090040] items-center text-white overflow-auto ">
-        <div className="bg-[#471396] mt-10 w-[50%] h-[90%] p-8 rounded-2xl flex flex-col gap-10 ">
+    <div className="flex flex-col min-h-screen bg-[#090040] items-center text-white overflow-auto ">
+        <div className="bg-[#471396] mt-5 sm:mt-8 md:mt-10 w-[95%] sm:w-[90%] md:w[75%] lg:w-[50%] h-[90%] p-5 min-h-[90vh] sm:p-6 md:p-8 rounded-2xl flex flex-col gap-6 sm:gap-8 md:gap-10 ">
             <BackButton/>
                 <div className='flex justify-center items-center'>
-                    <h1 className='font-bold text-2xl'>Fill the required details</h1>
+                    <h1 className='font-bold text-xl sm:text-2xl text-center'>Fill the required details</h1>
                 </div>
-                <div className='w-[90%] p-3'>
+                <div className='w-full p-3'>
                     <label className='text-xl font-bold text-gray-400' >Title of issue :</label>
                     <input 
                         type='text'
@@ -54,23 +54,23 @@ const CreateIssue = () => {
                         }}
                     />
                 </div>
-                <div className='w-[90%] p-3'>
+                <div className='w-full p-3'>
                     <label className='text-xl font-bold text-gray-400 '>Description of issue :</label>
                     <textarea 
                         type='text'
                         placeholder='Enter issue of the repository'
-                        className="border-b w-full font-medium text-lg outline-none py-6"
+                        className="border-b w-full font-medium text-lg outline-none py-6 min-h-32 resize-none"
                         value={description}
                         onChange={(e) => {
                             setDescription(e.target.value)
                         }}
                     />
                 </div>
-                <div className='flex justify-center  items-center mt-8'>
+                <div className='flex justify-center  items-center mt-4 sm:mt-6'>
                     <button 
                         onClick={handleSubmit}
                         disabled={loading}
-                        className="px-6 py-3 font-medium text-lg rounded-full active:scale-95 cursor-pointer bg-green-600 text-black mg-4">
+                        className="px-6 py-3 font-medium text-lg rounded-full active:scale-95 cursor-pointer bg-green-600 text-black mg-4 transition disabled:cursor-not-allowed disabled:opacity-50">
                             {loading ? "Creating..." : "Create Issue"}
                         </button>
                 </div>
