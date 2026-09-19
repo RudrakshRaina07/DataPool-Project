@@ -6,7 +6,7 @@ const { recordContribution } = require("./contributionController");
 
 const createRepository = async (req, res) => {
     const {name, description, content, visibility, issues} = req.body;
-    const owner = localStorage.getItem("userId")
+    const owner = req.user.id
     try{
         if(!name){
             return res.status(400).json({error: "Repository name is required!"});
