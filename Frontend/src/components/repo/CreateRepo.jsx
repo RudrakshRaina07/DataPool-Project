@@ -21,7 +21,7 @@ const CreateRepo = () => {
         try {
             setLoading(true)
 
-            const owner = localStorage.getItem("token")
+            const token = localStorage.getItem("token")
 
             const res = await axios.post(`${API_URL}/repo/create`, {
                 name, 
